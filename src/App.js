@@ -3,8 +3,7 @@ import './App.css';
 import Header from './Header.js';
 import ImageList from './ImageList.js';
 import data from './data.js';
-import FilterKeyword from './FilterKeyword.js';
-import FilterHorns from './FilterHorns.js';
+import Dropdown from './Dropdown.js';
 
 export default class App extends Component {
   
@@ -31,11 +30,20 @@ export default class App extends Component {
       filteredData = filteredData.filter(item => item.horns === +(this.state.filterHorns))
     }
 
+    const keywordOptions = Array.from(new Set(data.map(item => item.keyword)));
+    const hornsOptions = Array.from(new Set(data.map(item => item.horns)));
+
     return (
       <div className="App">
         <Header />
-        <FilterKeyword dataKeyword={this.dataKeyword} />
-        <FilterHorns dataHorns={this.dataHorns} />
+        <Dropdown
+            options={keywordOptions}
+            handleChange={this.dataKeyword}
+          />
+          <Dropdown
+              options={hornsOptions}
+              handleChange={this.dataHorns}
+          />
         <ImageList data={filteredData} />
       </div>
     )
